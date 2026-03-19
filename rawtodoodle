@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+
+if [[ $# -ne 4 ]]; then
+	echo "usage: $0 infile width height outfile"
+	exit
+fi
+
+if [ ! -e "eightatron" ]; then
+	echo "couldn't find eightatron"
+	exit
+fi
+
+if [ ! -e "zpipe" ]; then
+	echo "couldn't find zpipe"
+	exit
+fi
+
+if [ ! -e "$1" ]; then
+	echo "couldn't find $1"
+	exit
+fi
+
+if [ -e "$3" ]; then
+	echo "output file $3 exists..."
+	exit
+fi
+
+EIGHTOUT="$1.undoodle"
+
+./eightatron $1 $2 $3 $EIGHTOUT
+./zpipe <$EIGHTOUT> $4
+dd if="$4" of="$4.tmp" bs=1 skip=2
+rm "$4"
+mv "$4.tmp" "$4"

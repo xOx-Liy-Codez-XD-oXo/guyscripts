@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+if [[ $# -ne 2 ]]; then
+	echo "usage: $0 infile outfile"
+	exit
+fi
+
+if [ ! -e "zpipe" ]; then
+	echo "couldn't find zpipe"
+	exit
+fi
+
+if [ ! -e "$1" ]; then
+	echo "couldn't find $1"
+	exit
+fi
+
+if [ -e "$2" ]; then
+	echo "output file $3 exists... continuing lol"
+fi
+
+./zpipe <$1> $2
+dd if="$2" of="$2.tmp" bs=1 skip=2
+rm "$2"
+mv "$2.tmp" "$2"
