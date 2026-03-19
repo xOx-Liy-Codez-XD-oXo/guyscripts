@@ -30,7 +30,7 @@ print("export")
 
 bpy.context.scene.frame_current = 1853
 
-primcount = (37 * 7) + 1 + 9
+primcount = (39 * 7) + 3 + 9
 file.write(primcount.to_bytes(2, byteorder='big'))
 file.write(framecount.to_bytes(2, byteorder='big'))
 
